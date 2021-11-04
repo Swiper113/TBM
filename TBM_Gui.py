@@ -87,7 +87,7 @@ class StockWatch(qtw.QScrollArea):
 		#self.layout().clearLayout()
 		for security in setter.market:
 			try:
-				self.cb[security] = qtw.QCheckBox(f"{security}: {security.close:,.2f}")
+				self.cb[security] = qtw.QCheckBox(f"{security}: {security.last_known():,.2f}")
 			except:
 				self.cb[security] = qtw.QCheckBox(f"{security}: Nan")
 			finally:
@@ -98,7 +98,7 @@ class StockWatch(qtw.QScrollArea):
 		for stock, button in self.cb.items():
 			#self.updateStockPlot()
 			try:
-				button.setText(f"{stock}: {stock.close:,.2f}")
+				button.setText(f"{stock}: {stock.last_known():,.2f}")
 			except KeyError:
 				#print("No price")
 				continue
@@ -303,7 +303,7 @@ class VitalsBlock(qtw.QWidget):
 		time = traider.clock.time.date() 
 		balance = traider.portfolio.balance
 		total_value = traider.portfolio.total_value
-		CAGR = traider.portfolio.CAGR
+		CAGR = traider.portfolio.performance.CAGR(traider.clock.start, traider.clock.time)
 
 		self.datetime_label.setText(f"Time:{time}")
 		self.balance_label.setText(f"Balance:{balance:,.2f}")
@@ -331,7 +331,7 @@ class PortfolioBlock(qtw.QScrollArea):
 
 		self.potrf = defaultdict()
 		for stock, owned in traider.portfolio.owned.items():
-			text = f"{owned} * {stock} at value {owned*stock.last_known_price:,.2f}"
+			text = f"{owned} * {stock} at value {owned*stock.last_known():,.2f}"
 			self.potrf[stock] = qtw.QLabel(text)
 			self.layout().addWidget(self.potrf[stock])
 

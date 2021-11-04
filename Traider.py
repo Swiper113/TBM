@@ -1,5 +1,4 @@
-
-from Poertfolio import Portfolio, PortfolioManager
+from Portfolio import Portfolio, PortfolioManager
 
 class Trader():
 	def __init__(self, clock, starting_balance, strategy, market):
@@ -32,7 +31,7 @@ class Trader():
 	def trade_security(self, security):
 		#security.update(self.clock.time)
 		try:
-			price = security.close
+			price = security.get_price(self.clock.time)
 			flag = self.strategy.main(security, price)
 			if flag == "Buy" or flag =="Sell":
 				self.manager.order(security, price, flag)

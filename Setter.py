@@ -78,9 +78,9 @@ class Setter():
 		time = self.clock.time
 		portf = self.traider.portfolio
 		portf.update()
-		x_axis = portf.performance.loc[:time].index.astype("int")//10**9
-		tot_axis = portf.performance["Total"].loc[:time]
-		indx_axis = portf.performance["norm_Close"].loc[:time]
+		x_axis = portf.performance.data.loc[:time].index.astype("int")//10**9
+		tot_axis = portf.performance.data["Close"].loc[:time]
+		indx_axis = portf.performance.data["norm"].loc[:time]
 
 		self.traiderPlot.curves[0].setData(x_axis, indx_axis)
 		self.traiderPlot.curves[-1].setData(x_axis, tot_axis)
@@ -144,7 +144,7 @@ class Setter():
 
 		run_timer = timer()
 		comparisons = 0
-		for time in self.market.market_index.data.loc[self.clock.start:self.clock.end].index:
+		for time in self.market.index.data.loc[self.clock.start:self.clock.end].index:
 			#self.traider.time = time
 			self.clock.update(time)
 			comparisons += self.traider.trade()
