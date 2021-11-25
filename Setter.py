@@ -6,7 +6,7 @@ from Market import Market
 from pandas.tseries.offsets import BDay, CustomBusinessDay
 from time import time as timer
 from datetime import date, datetime, timedelta
-import PySide2.QtWidgets as qtw
+import PySide6.QtWidgets as qtw
 import pyqtgraph as pg
 
 class Setter():
